@@ -6,4 +6,5 @@
     <string name="light_off">off</string>
     <string name="help_instructions">Turn off all the lights to win!</string>
     <string name="light_bulb">Light bulb</string>
+    <string name="help_button">Help</string>
 </resources>
