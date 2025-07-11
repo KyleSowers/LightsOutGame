@@ -5,13 +5,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +28,16 @@ public class MainActivity extends AppCompatActivity {
             Button gridButton = (Button) mLightGrid.getChildAt(buttonIndex);
             gridButton.setOnClickListener(this::onLightButtonClick);
         }
+
+        // Add long-click cheat for top-left button (0,0)
+        Button topLeftButton = (Button) mLightGrid.getChildAt(0);
+        topLeftButton.setOnLongClickListener(v -> {
+            mGame.turnAllLightsOff();    // Cheat: turn off all lights
+            setButtonColors();           // Update the grid UI
+            Toast.makeText(this, "Cheat activated!", Toast.LENGTH_SHORT).show();
+            return true;                 // Indicate the long click was handled
+        });
+
 
         mLightOnColor = ContextCompat.getColor(this, R.color.yellow);
         mLightOffColor = ContextCompat.getColor(this, R.color.black);
@@ -60,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.congrats, Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void setButtonColors() {
         for (int buttonIndex = 0; buttonIndex < mLightGrid.getChildCount(); buttonIndex++) {
