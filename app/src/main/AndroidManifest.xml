@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LightsOut">
         <activity
+            android:name=".ColorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
