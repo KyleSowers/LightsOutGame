@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private LightsOutGame mGame;
     private GridLayout mLightGrid;
+    private int mLightOnColorId;
     private int mLightOnColor;
     private int mLightOffColor;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLightGrid = findViewById(R.id.light_grid);
+        mLightOnColorId = R.color.yellow;
 
         // Add the same click handler to all buttons
         for (int buttonIndex = 0; buttonIndex < mLightGrid.getChildCount(); buttonIndex++) {
@@ -118,7 +120,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onChangeColorClick(View view) {
+        // Send the current color ID to ColorActivity
         Intent intent = new Intent(this, ColorActivity.class);
+        intent.putExtra(ColorActivity.EXTRA_COLOR, mLightOnColorId);
         mColorResultLauncher.launch(intent);
     }
 
@@ -130,8 +134,11 @@ public class MainActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();
                         if (data != null) {
-                            int colorID = data.getIntExtra(ColorActivity.EXTRA_COLOR, R.color.yellow);
-                            mLightOnColor = ContextCompat.getColor(MainActivity.this, colorID);
+                            // Create the "on" button color from the chosen color ID from ColorActivity
+                            mLightOnColorId = data.getIntExtra(ColorActivity.EXTRA_COLOR, R.color.yellow);
+                            mLightOnColor = ContextCompat.getColor(MainActivity.this, mLightOnColorId);
+//                            int colorID = data.getIntExtra(ColorActivity.EXTRA_COLOR, R.color.yellow);
+//                            mLightOnColor = ContextCompat.getColor(MainActivity.this, colorID);
                             setButtonColors();
                         }
                     }

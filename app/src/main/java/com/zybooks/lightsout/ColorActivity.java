@@ -3,12 +3,10 @@ package com.zybooks.lightsout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.RadioButton;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+
 
 public class ColorActivity extends AppCompatActivity {
 
@@ -18,6 +16,23 @@ public class ColorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color);
+
+        // Get the color ID from MainActivity
+        Intent intent = getIntent();
+        int colorID = intent.getIntExtra(EXTRA_COLOR, R.color.yellow);
+
+        // Select the radio button matching the color ID
+        int radioId = R.id.radio_yellow;
+        if (colorID == R.color.red) {
+            radioId = R.id.radio_red;
+        } else if (colorID == R.color.orange) {
+            radioId = R.id.radio_orange;
+        } else if (colorID == R.color.green) {
+            radioId = R.id.radio_green;
+        }
+
+        RadioButton radio = findViewById(radioId);
+        radio.setChecked(true);
     }
 
     public void onColorSelected(View view) {
