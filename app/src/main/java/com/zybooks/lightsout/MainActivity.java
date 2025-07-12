@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private int mLightOnColorId;
     private int mLightOnColor;
     private int mLightOffColor;
+    private final String LIGHT_COLOR_ID = "lightOnColorId";
 
     private final String GAME_STATE = "gameState";
 
@@ -32,7 +33,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLightGrid = findViewById(R.id.light_grid);
-        mLightOnColorId = R.color.yellow;
+//        mLightOnColorId = R.color.yellow;
+        if (savedInstanceState != null) {
+            mLightOnColorId = savedInstanceState.getInt(LIGHT_COLOR_ID, R.color.yellow);
+        } else {
+            mLightOnColorId = R.color.yellow;
+        }
+
+        mLightOnColor = ContextCompat.getColor(this, mLightOnColorId);
 
         // Add the same click handler to all buttons
         for (int buttonIndex = 0; buttonIndex < mLightGrid.getChildCount(); buttonIndex++) {
@@ -50,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        mLightOnColor = ContextCompat.getColor(this, R.color.yellow);
+//        mLightOnColor = ContextCompat.getColor(this, R.color.yellow);
         mLightOffColor = ContextCompat.getColor(this, R.color.black);
 
         mGame = new LightsOutGame();
@@ -68,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(GAME_STATE, mGame.getState());
+        outState.putInt(LIGHT_COLOR_ID, mLightOnColorId);
     }
 
     private void startGame() {
